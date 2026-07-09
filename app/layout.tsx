@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import { Big_Shoulders, IBM_Plex_Sans, IBM_Plex_Mono } from "next/font/google";
-import { Header } from "@/components/layout/Header";
 import "./globals.css";
 
 const bigShoulders = Big_Shoulders({
@@ -43,8 +42,7 @@ export default function RootLayout({
       className={`${bigShoulders.variable} ${plexSans.variable} ${plexMono.variable} h-full antialiased`}
     >
       <body className="bg-paper text-ink flex min-h-full flex-col">
-        <Header />
-        <main className="flex-1">{children}</main>
+        {children}
       </body>
     </html>
   );
