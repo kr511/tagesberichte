@@ -65,7 +65,7 @@ export default async function TagesberichtDetailPage({
             </div>
           </div>
 
-          <dl className="card mt-6 grid grid-cols-2 gap-4 p-4 text-sm sm:grid-cols-3">
+          <dl className="card ticked mt-6 grid grid-cols-2 gap-4 p-4 text-sm sm:grid-cols-3">
             <div>
               <dt className="label-tag mb-0.5">Wetter</dt>
               <dd>{bericht.wetter}</dd>
@@ -109,7 +109,7 @@ export default async function TagesberichtDetailPage({
             <span className="label-tag mb-2 block">Bericht</span>
             {bericht.status === "final" ? (
               bericht.bericht_text ? (
-                <div className="card p-4 text-sm whitespace-pre-wrap">
+                <div className="card ticked p-4 text-sm whitespace-pre-wrap">
                   {bericht.bericht_text}
                 </div>
               ) : (
@@ -125,7 +125,7 @@ export default async function TagesberichtDetailPage({
             )}
           </div>
 
-          <div className="card mt-6 p-4">
+          <div className="card ticked mt-6 p-4">
             <span className="label-tag">Stichpunkte (Original)</span>
             <p className="mt-1.5 text-sm whitespace-pre-wrap text-ink-soft">
               {bericht.stichpunkte}
