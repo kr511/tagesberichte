@@ -151,6 +151,7 @@ export function TagesberichtForm({
       const entwurf = raw ? parseTagesberichtEntwurf(raw) : null;
 
       if (entwurf && istEntwurfNeuerAls(entwurf, initialData?.updated_at)) {
+        // eslint-disable-next-line react-hooks/set-state-in-effect -- Client-seitiges Einlesen aus localStorage beim Mount; kein Lazy-Init moeglich, da window bei SSR fehlt.
         setWiederherstellbarerEntwurf(entwurf);
       } else if (raw) {
         window.localStorage.removeItem(entwurfKey);
@@ -165,6 +166,7 @@ export function TagesberichtForm({
   useEffect(() => {
     if (!autosaveBereit || !geaendert || wiederherstellbarerEntwurf) return;
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- Sofortige "speichert"-Anzeige zum Start des debounced localStorage-Writes (externes System).
     setSpeicherStatus("speichert");
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
@@ -207,6 +209,7 @@ export function TagesberichtForm({
 
   useEffect(() => {
     if (state.errors || state.message) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Reaktion auf das Server-Action-Ergebnis (useActionState): Formular nach Fehlversuch wieder als geaendert markieren.
       setGeaendert(true);
     }
   }, [state]);
@@ -220,6 +223,7 @@ export function TagesberichtForm({
     } catch {
       // Die erfolgreiche Server-Speicherung bleibt maßgeblich.
     }
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- Aufraeumen nach erfolgreichem Server-Submit unmittelbar vor der Navigation.
     setGeaendert(false);
     router.push(state.redirectTo);
     router.refresh();
