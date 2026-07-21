@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { createDokument } from "@/lib/actions/dokumente";
+import { sanitizeDateiname } from "@/lib/format";
 
 const MAX_DATEIGROESSE = 20 * 1024 * 1024;
 const ERLAUBTE_TYPEN = [
@@ -42,7 +43,7 @@ export function DokumentUpload({
         continue;
       }
 
-      const sichererName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+      const sichererName = sanitizeDateiname(file.name);
       const path = `${firmaId}/${baustelleId}/${crypto.randomUUID()}-${sichererName}`;
 
       const { error: uploadError } = await supabase.storage
@@ -61,8 +62,8 @@ export function DokumentUpload({
         mime_type: file.type,
         groesse_bytes: file.size,
       });
-      if (result.message !== "success") {
-        setError(`"${file.name}" konnte nicht gespeichert werden: ${result.message ?? "Unbekannter Fehler"}`);
+      if (!result.ok) {
+        setError(`"${file.name}" konnte nicht gespeichert werden: ${result.error ?? "Unbekannter Fehler"}`);
         await supabase.storage.from("baustellen-dokumente").remove([path]);
       }
     }

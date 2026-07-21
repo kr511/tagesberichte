@@ -13,10 +13,6 @@ const createDokumentSchema = z.object({
   groesse_bytes: z.coerce.number().int().min(0).optional(),
 });
 
-export interface DokumentFormState {
-  message?: string;
-}
-
 export interface DokumentActionResult {
   ok: boolean;
   error?: string;
@@ -30,10 +26,10 @@ const dokumentIdSchema = z.object({
 
 export async function createDokument(
   input: z.infer<typeof createDokumentSchema>,
-): Promise<DokumentFormState> {
+): Promise<DokumentActionResult> {
   const validated = createDokumentSchema.safeParse(input);
   if (!validated.success) {
-    return { message: "Ungültige Dokumentdaten." };
+    return { ok: false, error: "Ungültige Dokumentdaten." };
   }
 
   const supabase = await createClient();
@@ -50,11 +46,11 @@ export async function createDokument(
 
   if (error) {
     console.error("createDokument fehlgeschlagen:", error);
-    return { message: "Dokument konnte nicht gespeichert werden." };
+    return { ok: false, error: "Dokument konnte nicht gespeichert werden." };
   }
 
   revalidatePath(`/baustellen/${validated.data.baustelle_id}`);
-  return { message: "success" };
+  return { ok: true };
 }
 
 export async function deleteDokument(
