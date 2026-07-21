@@ -32,7 +32,11 @@ export function DokumenteListe({
 
   return (
     <div className="space-y-2">
-      {feedback && <p className="text-brick text-sm">{feedback}</p>}
+      {feedback && (
+        <p className="text-brick text-sm" role="alert">
+          {feedback}
+        </p>
+      )}
       <ul className="divide-line divide-y-[1.5px]">
         {dokumente.map((dokument) => {
         const istPdf = dokument.mime_type === "application/pdf";
