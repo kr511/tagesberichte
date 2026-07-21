@@ -274,10 +274,10 @@ export function TagesberichtForm({
             Serverdaten werden nicht automatisch überschrieben.
           </p>
           <div className="mt-3 flex flex-wrap gap-2">
-            <button type="button" onClick={entwurfWiederherstellen} className="btn-primary min-h-10">
+            <button type="button" onClick={entwurfWiederherstellen} className="btn-primary min-h-11">
               Entwurf wiederherstellen
             </button>
-            <button type="button" onClick={entwurfVerwerfen} className="btn-secondary min-h-10">
+            <button type="button" onClick={entwurfVerwerfen} className="btn-secondary min-h-11">
               Entwurf verwerfen
             </button>
           </div>
